@@ -20,6 +20,9 @@ namespace BankApp.Pages
             //  .Select(funcSelect)
             //  .Take(10).ToList();
 
+            //Expression ex;
+            //ex = () => 10;
+
 
             Expression<Func<User, User>> expSelect =  u => new User { Givenname = u.Givenname, Maidenname = u.Maidenname } ;   
 
