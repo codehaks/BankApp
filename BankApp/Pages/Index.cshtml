@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "{number?}"
+add
 @model BankApp.Pages.IndexModel
 @{
     ViewData["Title"] = "Index";
@@ -11,3 +12,36 @@
 {
     <p> @user.Givenname @user.Maidenname </p>
 }
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" asp-page="index" asp-route-number="1">First</a></li>
+
+        @if (Model.PageNumber <= 5)
+        {
+            @for (int i = 0; i < 10; i++)
+            {
+                <li class="page-item @(Model.PageNumber==i+1?"active":"")"><a class="page-link" asp-page="index" asp-route-number="@(i+1)">@(i+1)</a></li>
+            }
+        }
+        else if (Model.PageNumber > 5 && Model.PageNumber < Model.TotalPages - 5)
+        {
+            @for (int i = Model.PageNumber - 5; i < Model.PageNumber + 5; i++)
+            {
+                <li class="page-item @(Model.PageNumber==i?"active":"")">
+                    <a class="page-link " asp-page="index" asp-route-number="@i" >@i</a>
+                </li>
+            }
+        }
+        else
+        {
+            @for (int i = Model.TotalPages-10; i < Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.PageNumber==i?"active":"")"><a class="page-link" asp-page="index" asp-route-number="@i">@i</a></li>
+            }
+        }
+
+
+        <li class="page-item"><a class="page-link" asp-page="index" asp-route-number="@Model.TotalPages">Last</a></li>
+    </ul>
+</nav>
