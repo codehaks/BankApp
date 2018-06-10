@@ -20,6 +20,7 @@ namespace BankApp.TagHelpers
         public int PageSize { get; set; }
         public int PageCount { get; set; }
         public int PageRange { get; set; }
+
         public string PageTarget { get; set; }
 
         private string AddPageContent()
@@ -28,10 +29,14 @@ namespace BankApp.TagHelpers
             var content = new StringBuilder();
             content.Append(" <ul class='pagination'>");
             content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/1'>First</a></li>");
-            for (int currentPage = 0; currentPage < PageCount; currentPage++)
+
+            for (int currentPage = 1; currentPage < PageCount+1; currentPage++)
             {
-                content.Append($"<li class='page-item'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
+                var active = currentPage == PageNumber ? "active" : "";
+                content.Append($"<li class='page-item {active}'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
             }
+
+
             content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/{PageCount}'>Last</a></li>");
             content.Append(" </ul");
             return content.ToString();
