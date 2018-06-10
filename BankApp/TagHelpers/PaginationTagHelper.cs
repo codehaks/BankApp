@@ -25,16 +25,42 @@ namespace BankApp.TagHelpers
 
         private string AddPageContent()
         {
+            if (PageRange==0)
+            {
+                PageRange = 1;
+            }
 
             var content = new StringBuilder();
             content.Append(" <ul class='pagination'>");
             content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/1'>First</a></li>");
 
-            for (int currentPage = 1; currentPage < PageCount+1; currentPage++)
+            if (PageNumber<=PageRange)
             {
-                var active = currentPage == PageNumber ? "active" : "";
-                content.Append($"<li class='page-item {active}'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
+                for (int currentPage = 1; currentPage < 2*PageRange + 1; currentPage++)
+                {
+                    var active = currentPage == PageNumber ? "active" : "";
+                    content.Append($"<li class='page-item {active}'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
+                }
             }
+            else if (PageNumber>PageRange && PageNumber<PageCount-PageRange)
+            {
+                for (int currentPage = PageNumber-PageRange; currentPage < PageNumber + PageRange ; currentPage++)
+                {
+                    var active = currentPage == PageNumber ? "active" : "";
+                    content.Append($"<li class='page-item {active}'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
+                }
+            }
+            else
+            {
+                for (int currentPage = PageCount-(2*PageRange); currentPage < PageCount + 1; currentPage++)
+                {
+                    var active = currentPage == PageNumber ? "active" : "";
+                    content.Append($"<li class='page-item {active}'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
+                }
+            }
+
+
+            
 
 
             content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/{PageCount}'>Last</a></li>");
