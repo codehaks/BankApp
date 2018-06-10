@@ -13,4 +13,4 @@
     <p> @user.Givenname @user.Maidenname </p>
 }
 
-<Pagination page-count="3" page-number="@Model.PageNumber" page-range="5" ></Pagination>
+<Pagination page-count="@Model.TotalPages" page-number="@Model.PageNumber" page-range="5" page-first="اول" page-last="آخر"></Pagination>

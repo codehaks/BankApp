@@ -20,6 +20,8 @@ namespace BankApp.TagHelpers
         public int PageSize { get; set; }
         public int PageCount { get; set; }
         public int PageRange { get; set; }
+        public string PageFirst { get; set; }
+        public string PageLast { get; set; }
 
         public string PageTarget { get; set; }
 
@@ -35,9 +37,19 @@ namespace BankApp.TagHelpers
                 PageRange = PageCount;
             }
 
+            if (string.IsNullOrEmpty(PageFirst))
+            {
+                PageFirst = "First";
+            }
+
+            if (string.IsNullOrEmpty(PageLast))
+            {
+                PageLast = "Last";
+            }
+
             var content = new StringBuilder();
             content.Append(" <ul class='pagination'>");
-            content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/1'>First</a></li>");
+            content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/1'>{PageFirst}</a></li>");
 
             if (PageNumber <= PageRange)
             {
@@ -76,7 +88,7 @@ namespace BankApp.TagHelpers
                 }
             }
 
-            content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/{PageCount}'>Last</a></li>");
+            content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/{PageCount}'>{PageLast}</a></li>");
             content.Append(" </ul");
             return content.ToString();
         }
