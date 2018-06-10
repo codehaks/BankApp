@@ -1,0 +1,16 @@
+﻿@page "{number?}"
+@model BankApp.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h2>Admin - User</h2>
+<hr />
+
+@foreach (var user in Model.Users)
+{
+    <p> @user.Givenname @user.Maidenname </p>
+}
+
+<Pagination page-count="@Model.TotalPages" page-target="/admin" page-number="@Model.PageNumber" page-range="5" page-first="اول" page-last="آخر"></Pagination>
