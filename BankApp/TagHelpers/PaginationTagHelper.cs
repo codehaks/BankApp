@@ -25,43 +25,56 @@ namespace BankApp.TagHelpers
 
         private string AddPageContent()
         {
-            if (PageRange==0)
+            if (PageRange == 0)
             {
                 PageRange = 1;
+            }
+
+            if (PageCount < PageRange)
+            {
+                PageRange = PageCount;
             }
 
             var content = new StringBuilder();
             content.Append(" <ul class='pagination'>");
             content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/1'>First</a></li>");
 
-            if (PageNumber<=PageRange)
+            if (PageNumber <= PageRange)
             {
-                for (int currentPage = 1; currentPage < 2*PageRange + 1; currentPage++)
+                for (int currentPage = 1; currentPage < 2 * PageRange + 1; currentPage++)
                 {
+                    if (currentPage < 1 || currentPage > PageCount)
+                    {
+                        continue;
+                    }
                     var active = currentPage == PageNumber ? "active" : "";
                     content.Append($"<li class='page-item {active}'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
                 }
             }
-            else if (PageNumber>PageRange && PageNumber<PageCount-PageRange)
+            else if (PageNumber > PageRange && PageNumber < PageCount - PageRange)
             {
-                for (int currentPage = PageNumber-PageRange; currentPage < PageNumber + PageRange ; currentPage++)
+                for (int currentPage = PageNumber - PageRange; currentPage < PageNumber + PageRange; currentPage++)
                 {
+                    if (currentPage < 1 || currentPage > PageCount)
+                    {
+                        continue;
+                    }
                     var active = currentPage == PageNumber ? "active" : "";
                     content.Append($"<li class='page-item {active}'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
                 }
             }
             else
             {
-                for (int currentPage = PageCount-(2*PageRange); currentPage < PageCount + 1; currentPage++)
+                for (int currentPage = PageCount - (2 * PageRange); currentPage < PageCount + 1; currentPage++)
                 {
+                    if (currentPage < 1 || currentPage > PageCount)
+                    {
+                        continue;
+                    }
                     var active = currentPage == PageNumber ? "active" : "";
                     content.Append($"<li class='page-item {active}'><a class='page-link'href='{PageTarget}/{currentPage}'>{currentPage}</a></li>");
                 }
             }
-
-
-            
-
 
             content.Append($"<li class='page-item'><a class='page-link' href='{PageTarget}/{PageCount}'>Last</a></li>");
             content.Append(" </ul");
