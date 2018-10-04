@@ -1,4 +1,5 @@
 ﻿using BankApp.Data;
+using BankApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -12,10 +13,16 @@ namespace BankApp.Controllers
             _db = db;
         }
         [Route("/")]
-        public IActionResult Index()
+        public IActionResult Index(UserFilter filter)
         {
-            var model = _db.Users.Take(10);
+            var model = _db.Users.Where(u => u.City == filter.City);
             return View(model);
+        }
+
+        public IActionResult Cities()
+        {
+            var model = _db.Users.Select(u => new { Name = u.City }).Distinct();
+            return Ok(model);
         }
     }
 }

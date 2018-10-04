@@ -6,6 +6,20 @@
 }
 
 <h2>Users</h2>
+<div class="card">
+    <div class="card-body">
+        <form method="get" class="form-inline">
+            <div class="form-group">
+                <input name="City" type="text" id="cityName" class="form-control" aria-describedby="City" placeholder="City">
+                <input name="City" type="hidden" id="hidden-field">
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+</div>
+
 <table class="table table-hover table-sm">
     <thead>
         <tr>
@@ -19,16 +33,39 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>@i</td>
-            <td>@item.Givenname</td>
-            <td>@item.Surname</td>
-            <td>@item.Country</td>
-            <th>@item.Age</th>
-        </tr>
+            <tr>
+                <td>@i</td>
+                <td>@item.Givenname</td>
+                <td>@item.Surname</td>
+                <td>@item.Country</td>
+                <th>@item.Age</th>
+            </tr>
             i++;
         }
 
     </tbody>
 </table>
 
+@section scripts{
+
+    <script src="~/lib/AutoComplete/autocomplete.js"></script>
+    <script>
+        var cities = [];
+
+        $(document).ready(function () {
+            $.ajax({ url: "/user/cities", method: "GET" })
+                .done(function (data) {
+                    cities = data;
+
+                    $('#cityName').autocomplete({
+                        nameProperty: 'name',
+                        valueField: '#hidden-field',
+                        dataSource: cities
+
+                    });
+
+                });
+        });       
+
+    </script>
+}
