@@ -13,6 +13,8 @@ namespace BankApp.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //builder.Entity<User>().HasQueryFilter(u=>u.Country=="CA");
+
             base.OnModelCreating(builder);
         }
     }
